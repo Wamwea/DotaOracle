@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mydotastats/screens/ProfileScreen.dart';
 import 'package:mydotastats/utilities/Cards.dart';
 import '../utilities/constants.dart';
 import 'package:mydotastats/screens/MatchScreen.dart';
@@ -24,10 +23,32 @@ class _DataScreenState extends State<DataScreen> {
   String profileName;
   Color radiantColor = kCardColor;
   Color direColor = kCardColor;
+
+  Text winOrLose() {
+    if ((widget.matchInfo[0]['player_slot'] <= 127 &&
+            widget.matchInfo[0]['radiant_win'] == true) ||
+        (widget.matchInfo[0]['player_slot'] >= 128 &&
+            widget.matchInfo[0]['radiant_win'] == false)) {
+      return Text('YOU WON!🐣',
+          style: TextStyle(
+              fontSize: 20,
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              backgroundColor: Colors.green));
+    } else {
+      return Text('YOU LOST!😔',
+          style: TextStyle(
+              fontSize: 20,
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              backgroundColor: Colors.red));
+    }
+  }
+
   void updateUI() {
     setState(() {
-      profileStuff = widget.profileInfo;
       matchStuff = widget.matchInfo;
+      profileStuff = widget.profileInfo;
       profileName = profileStuff['profile']['personaname'];
       iconAddress = profileStuff['profile']['avatarfull'];
       radiantWin = matchStuff[0]['radiant_win'];
@@ -141,6 +162,10 @@ class _DataScreenState extends State<DataScreen> {
                       ),
                       Expanded(
                         flex: 1,
+                        child: winOrLose(),
+                      ),
+                      Expanded(
+                        flex: 1,
                         child: Row(
                           children: <Widget>[
                             Expanded(
@@ -222,92 +247,47 @@ class _DataScreenState extends State<DataScreen> {
               ReusableCard(
                 flex: 3,
                 cardChild: Expanded(
-                  flex: 9,
+                  flex: 1000,
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
                       Expanded(
                         flex: 1,
-                        child: Text(
-                          'More:',
-                          style: kLabelTextStyle,
+                        child: Center(
+                          child: Text(
+                            'More:',
+                            style: kLabelTextStyle,
+                          ),
                         ),
                       ),
-                      Expanded(
-                        flex: 9,
-                        child: Row(
-                          children: <Widget>[
-                            ReusableCard(
-                              functionality: () {
-                                setState(() {
-                                  deaths = 0;
-                                });
-                              },
-                              flex: 1,
-                              cardChild: Text(
-                                'Reset values',
-                                style: kNumberTextStyle,
-                              ),
-                              textInfo:
-                                  Text('Option 1:', style: kLabelTextStyle),
-                            ),
-                            ReusableCard(
-                              flex: 1,
-                              functionality: () {
-                                setState(() {
-                                  updateUI();
-                                });
-                              },
-                              cardChild: Text(
-                                'ReAcquire Data',
-                                style: kNumberTextStyle,
-                              ),
-                              textInfo:
-                                  Text('Option 2', style: kLabelTextStyle),
-                            ),
-                          ],
+                      ReusableCard(
+                        flex: 3,
+                        functionality: () {
+                          setState(() {
+                            updateUI();
+                          });
+                        },
+                        cardChild: Text(
+                          'ReAcquire Data',
+                          style: kNumberTextStyle,
                         ),
+                        textInfo: Text('Option 2', style: kLabelTextStyle),
                       ),
-                      Expanded(
-                        flex: 9,
-                        child: Row(
-                          children: <Widget>[
-                            ReusableCard(
-                              flex: 1,
-                              functionality: () {
-                                Navigator.push(context,
-                                    MaterialPageRoute(builder: (context) {
-                                  return ProfileScreen();
-                                }));
-                              },
-                              cardChild: Center(
-                                child: Text(
-                                  'Profile Info',
-                                  style: kNumberTextStyle,
-                                ),
-                              ),
-                              textInfo:
-                                  Text('Option 3', style: kLabelTextStyle),
-                            ),
-                            ReusableCard(
-                              flex: 1,
-                              functionality: () {
-                                Navigator.push(context,
-                                    MaterialPageRoute(builder: (context) {
-                                  return MatchScreen();
-                                }));
-                              },
-                              cardChild: Center(
-                                child: Text(
-                                  'Recent Matches',
-                                  style: kNumberTextStyle,
-                                ),
-                              ),
-                              textInfo:
-                                  Text('Option 4', style: kLabelTextStyle),
-                            ),
-                          ],
+                      ReusableCard(
+                        flex: 3,
+                        functionality: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return MatchScreen(matchStuff);
+                          }));
+                        },
+                        cardChild: Center(
+                          child: Text(
+                            'View Recent Matches',
+                            style: kNumberTextStyle,
+                          ),
                         ),
+                        textInfo: Text('Option 3', style: kLabelTextStyle),
                       ),
                     ],
                   ),

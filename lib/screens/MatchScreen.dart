@@ -1,36 +1,64 @@
 import 'package:flutter/material.dart';
 import 'package:mydotastats/utilities/constants.dart';
 import 'package:mydotastats/utilities/Cards.dart';
-
-List<Widget> listBuilder(int noOfItems) {
-  List<Widget> listItems = [];
-  for (int x = 0; x < noOfItems; x++) {
-    Widget rowItem = DataCard(
-      data1: x.toString(),
-      data2: (x + 1).toString(),
-      data3: (x + 2).toString(),
-      data4: (x + 3).toString(),
-    );
-    listItems.add(rowItem);
-  }
-  return listItems;
-}
+import 'package:mydotastats/services/networking.dart';
 
 class MatchScreen extends StatefulWidget {
+  MatchScreen(this.matchData);
+  final dynamic matchData;
   @override
   _MatchScreenState createState() => _MatchScreenState();
 }
 
 class _MatchScreenState extends State<MatchScreen> {
+  List<Widget> listBuilder() {
+    dynamic matchinfo = widget.matchData;
+    int noOfItems = GetResponse().noOfMatches;
+    List<Widget> listItems = [];
+    for (int x = 0; x < noOfItems; x++) {
+      String winOrLose() {
+        if ((widget.matchData[x]['player_slot'] <= 127 &&
+                widget.matchData[x]['radiant_win'] == true) ||
+            (widget.matchData[x]['player_slot'] >= 128 &&
+                widget.matchData[x]['radiant_win'] == false)) {
+          return 'W';
+        } else {
+          return 'L';
+        }
+      }
+
+      Widget rowItem = Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          Expanded(flex: 1, child: Text('${x + 1}: ', style: kLabelTextStyle)),
+          Expanded(
+            flex: 15,
+            child: DataCard(
+              data1: matchinfo[x]['kills'].toString(),
+              data2: matchinfo[x]['deaths'].toString(),
+              data3: matchinfo[x]['assists'].toString(),
+              data4: winOrLose(),
+            ),
+          )
+        ],
+      );
+      listItems.add(rowItem);
+    }
+    return listItems;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: kCardColor,
         title: Text('MATCHDATA'),
       ),
       body: SafeArea(
           child: Container(
-        color: kBackGroundColor,
+        decoration: BoxDecoration(
+          color: kCardColor,
+        ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -40,8 +68,8 @@ class _MatchScreenState extends State<MatchScreen> {
               child: DataCard(
                 data1: 'KILLS',
                 data2: 'DEATHS',
-                data3: 'Assists',
-                data4: 'TEAM',
+                data3: 'ASSISTS',
+                data4: 'WIN/LOSE',
               ),
             ),
             SizedBox(
@@ -50,9 +78,10 @@ class _MatchScreenState extends State<MatchScreen> {
             Expanded(
               flex: 9,
               child: Container(
-                decoration: defaultBorderDecoration,
+                margin: EdgeInsets.all(10),
+                decoration: defaultListViewBorderDecoration,
                 child: ListView(
-                  children: listBuilder(50),
+                  children: listBuilder(),
                 ),
               ),
             ),

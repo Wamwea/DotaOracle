@@ -40,7 +40,6 @@ class NumberCard extends StatelessWidget {
     return Expanded(
       child: Container(
         margin: EdgeInsets.all(10),
-        decoration: defaultBorderDecoration,
         child: Center(
           child: Text(
             cardData != null ? cardData : '',
@@ -53,13 +52,14 @@ class NumberCard extends StatelessWidget {
 }
 
 class DataCard extends StatelessWidget {
-  DataCard(
-      {this.functionality,
-      this.data1,
-      this.data2,
-      this.data3,
-      this.data4,
-      this.flex});
+  DataCard({
+    this.functionality,
+    this.data1,
+    this.data2,
+    this.data3,
+    this.data4,
+    this.flex,
+  });
   final int flex;
   final String data1;
   final String data2;
@@ -68,14 +68,19 @@ class DataCard extends StatelessWidget {
   final Function functionality;
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: <Widget>[
-        NumberCard(data1),
-        NumberCard(data2),
-        NumberCard(data3),
-        NumberCard(data4)
-      ],
+    return Container(
+      decoration: BoxDecoration(
+          border: Border(bottom: BorderSide(color: Colors.white))),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          NumberCard(data1),
+          NumberCard(data2),
+          NumberCard(data3),
+          NumberCard(data4)
+        ],
+      ),
     );
   }
 }

@@ -10,5 +10,9 @@ const kMarginSize = 15.5;
 const kCardColor = Color(0xff5D07F2);
 BoxDecoration defaultBorderDecoration = BoxDecoration(
   border: Border.all(color: Colors.white, width: 2),
-  borderRadius: BorderRadius.circular(25),
+  borderRadius: BorderRadius.circular(15),
+);
+BoxDecoration defaultListViewBorderDecoration = BoxDecoration(
+  border: Border.all(color: Colors.white, width: 2),
+  borderRadius: BorderRadius.circular(2),
 );

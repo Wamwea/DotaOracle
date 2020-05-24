@@ -7,9 +7,10 @@ class GetResponse {
   dynamic myPlayerData;
   dynamic myLatestMatchData;
   dynamic profileData;
+  int noOfMatches = 50;
   Future<dynamic> getPlayerData() async {
     http.Response response = await http
-        .get('https://api.opendota.com/api/players/$mySteamID/recentMatches');
+        .get('https://api.opendota.com/api/players/$mySteamID/matches?');
     if (response.statusCode == 200) {
       print('call successful');
       myPlayerData = convert.jsonDecode(response.body);

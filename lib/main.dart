@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:mydotastats/screens/DataScreen.dart';
-import 'package:mydotastats/screens/HomeScreen.dart';
-import 'package:mydotastats/screens/MatchScreen.dart';
+import 'package:mydotastats/screens/LoadingScreen.dart';
 
 void main() {
   runApp(MyApp());
@@ -17,7 +14,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home:MatchScreen(),
+      home: LoadingScreen(),
     );
   }
 }
