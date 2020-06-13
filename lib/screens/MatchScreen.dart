@@ -12,8 +12,8 @@ class MatchScreen extends StatefulWidget {
 
 class _MatchScreenState extends State<MatchScreen> {
   List<Widget> listBuilder() {
-    dynamic matchinfo = widget.matchData;
-    int noOfItems = GetResponse().noOfMatches;
+    dynamic matchinfo = widget.matchData != null ? widget.matchData : null;
+    int noOfItems = GetData.noOfMatches;
     List<Widget> listItems = [];
     for (int x = 0; x < noOfItems; x++) {
       String winOrLose() {
@@ -51,13 +51,16 @@ class _MatchScreenState extends State<MatchScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: kCardColor,
-        title: Text('MATCHDATA'),
+        backgroundColor: Colors.white,
+        title: Text(
+          'MATCHDATA',
+          style: TextStyle(color: Colors.black),
+        ),
       ),
       body: SafeArea(
           child: Container(
         decoration: BoxDecoration(
-          color: kCardColor,
+          color: Colors.white,
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -78,7 +81,7 @@ class _MatchScreenState extends State<MatchScreen> {
             Expanded(
               flex: 9,
               child: Container(
-                margin: EdgeInsets.all(10),
+                margin: EdgeInsets.all(5),
                 decoration: defaultListViewBorderDecoration,
                 child: ListView(
                   children: listBuilder(),

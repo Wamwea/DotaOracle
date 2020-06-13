@@ -64,6 +64,7 @@ class _DataScreenState extends State<DataScreen> {
     });
   }
 
+  @override
   void initState() {
     super.initState();
     updateUI();
@@ -71,237 +72,248 @@ class _DataScreenState extends State<DataScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: kCardColor,
-      body: SafeArea(
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15.5),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              Expanded(
-                flex: 2,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    Expanded(
-                      flex: 5,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: <Widget>[
-                          ReusableCard(
-                              flex: 2,
-                              cardChild: Text(
-                                ' $profileName',
-                                style: kNumberTextStyle,
-                              ),
-                              textInfo: Text(
-                                'HELLO!',
-                                style: kLabelTextStyle,
-                              )),
-                          ReusableCard(
-                              flex: 1,
-                              cardChild: Text(''),
-                              textInfo: Text(
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Expanded(
+              flex: 2,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  Expanded(
+                    flex: 7,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: <Widget>[
+                        Expanded(
+                          child: Container(
+                            margin: EdgeInsets.all(15),
+                            decoration: defaultBorderDecoration,
+                            child: Column(
+                              children: <Widget>[
+                                Text(
+                                  'HELLO',
+                                  style: kLabelTextStyle,
+                                ),
+                                Text(profileName != null
+                                    ? profileName
+                                    : 'name goes here'),
+                              ],
+                            ),
+                          ),
+                        ),
+                        ReusableCard(
+                            flex: 1,
+                            cardChild: Expanded(flex: 1, child: Text('')),
+                            textInfo: Expanded(
+                              flex: 20,
+                              child: Text(
                                 'Welcome to Dota Analyzer!',
                                 style: kLabelTextStyle,
-                              )),
+                              ),
+                            )),
+                      ],
+                    ),
+                  ),
+                  iconAddress != null
+                      ? IconCard(
+                          flex: 5,
+                          cardChild: CircleAvatar(
+                            backgroundImage: NetworkImage(
+                              iconAddress,
+                            ),
+                          ))
+                      : ReusableCard(
+                          textInfo: Expanded(flex: 1, child: Text('')),
+                          cardChild: Expanded(
+                            flex: 15,
+                            child: Image.asset(
+                              'images/404.jpg',
+                              fit: BoxFit.scaleDown,
+                            ),
+                          ),
+                        )
+                ],
+              ),
+            ),
+            ReusableCard(
+              flex: 3,
+              cardChild: Expanded(
+                flex: 7,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Expanded(
+                      flex: 1,
+                      child: Text(
+                        'RECENT MATCH STATS',
+                        style: kLabelTextStyle,
+                      ),
+                    ),
+                    Expanded(
+                      flex: 2,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            'MATCH ID: ',
+                            style: kLabelTextStyle,
+                          ),
+                          Text(
+                            '$matchID',
+                            style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.grey),
+                          ),
                         ],
                       ),
                     ),
-                    ReusableCard(
+//                    Expanded(
+//                      flex: 1,
+//                      child: winOrLose(),
+//                    ),
+                    Expanded(
+                      flex: 1,
+                      child: Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: radiantColor,
+                                border:
+                                    Border.all(color: Colors.white, width: 0.8),
+                              ),
+                              child: Center(
+                                  child: Text(
+                                'RADIANT',
+                                style: kLabelTextStyle,
+                              )),
+                            ),
+                          ),
+                          VerticalDivider(
+                            width: 5,
+                            thickness: 100,
+                          ),
+                          Expanded(
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: direColor,
+                                border:
+                                    Border.all(color: Colors.white, width: 0.8),
+                              ),
+                              child: Center(
+                                  child: Text(
+                                'DIRE',
+                                style: kLabelTextStyle,
+                              )),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Expanded(
                       flex: 4,
-                      cardChild: Image(
-                        image: NetworkImage(iconAddress),
-                        fit: BoxFit.fill,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          ReusableCard(
+                            flex: 3,
+                            cardChild: Text('$kills', style: kNumberTextStyle),
+                            textInfo: Text('KILLS', style: kLabelTextStyle),
+                          ),
+                          ReusableCard(
+                            flex: 3,
+                            cardChild: Text(
+                              '$deaths',
+                              style: kNumberTextStyle,
+                            ),
+                            textInfo: Text('DEATHS', style: kLabelTextStyle),
+                          ),
+                          ReusableCard(
+                            flex: 3,
+                            cardChild: Text(
+                              '$assists',
+                              style: kNumberTextStyle,
+                            ),
+                            textInfo: Text('ASSISTS', style: kLabelTextStyle),
+                          ),
+                        ],
                       ),
-                      textInfo: Text(
-                        'ICON:',
-                        style: kLabelTextStyle,
-                      ),
-                    )
+                    ),
                   ],
                 ),
               ),
-              ReusableCard(
-                flex: 3,
-                cardChild: Expanded(
-                  flex: 7,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Expanded(
-                        flex: 1,
+              textInfo: Expanded(
+                flex: 1,
+                child: Text(
+                  '',
+                  style: kLabelTextStyle,
+                ),
+              ),
+            ),
+            ReusableCard(
+              flex: 3,
+              cardChild: Expanded(
+                flex: 1000,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    Expanded(
+                      flex: 1,
+                      child: Center(
                         child: Text(
-                          'RECENT MATCH STATS',
+                          'More:',
                           style: kLabelTextStyle,
                         ),
                       ),
-                      Expanded(
-                        flex: 2,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            Text(
-                              'MATCH ID: ',
-                              style: kLabelTextStyle,
-                            ),
-                            Text(
-                              '$matchID',
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.grey),
-                            ),
-                          ],
-                        ),
+                    ),
+                    ReusableCard(
+                      flex: 3,
+                      functionality: () {
+                        setState(() {
+                          updateUI();
+                        });
+                      },
+                      cardChild: Text(
+                        'ReAcquire Data',
+                        style: kNumberTextStyle,
                       ),
-                      Expanded(
-                        flex: 1,
-                        child: winOrLose(),
-                      ),
-                      Expanded(
-                        flex: 1,
-                        child: Row(
-                          children: <Widget>[
-                            Expanded(
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: radiantColor,
-                                  border: Border.all(
-                                      color: Colors.white, width: 0.8),
-                                ),
-                                child: Center(
-                                    child: Text(
-                                  'RADIANT',
-                                  style: kLabelTextStyle,
-                                )),
-                              ),
-                            ),
-                            VerticalDivider(
-                              width: 5,
-                              thickness: 100,
-                            ),
-                            Expanded(
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: direColor,
-                                  border: Border.all(
-                                      color: Colors.white, width: 0.8),
-                                ),
-                                child: Center(
-                                    child: Text(
-                                  'DIRE',
-                                  style: kLabelTextStyle,
-                                )),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Expanded(
-                        flex: 4,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            ReusableCard(
-                              flex: 3,
-                              cardChild:
-                                  Text('$kills', style: kNumberTextStyle),
-                              textInfo: Text('KILLS', style: kLabelTextStyle),
-                            ),
-                            ReusableCard(
-                              flex: 3,
-                              cardChild: Text(
-                                '$deaths',
-                                style: kNumberTextStyle,
-                              ),
-                              textInfo: Text('DEATHS', style: kLabelTextStyle),
-                            ),
-                            ReusableCard(
-                              flex: 3,
-                              cardChild: Text(
-                                '$assists',
-                                style: kNumberTextStyle,
-                              ),
-                              textInfo: Text('ASSISTS', style: kLabelTextStyle),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                textInfo: Expanded(
-                  flex: 1,
-                  child: Text(
-                    '',
-                    style: kLabelTextStyle,
-                  ),
-                ),
-              ),
-              ReusableCard(
-                flex: 3,
-                cardChild: Expanded(
-                  flex: 1000,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: <Widget>[
-                      Expanded(
-                        flex: 1,
-                        child: Center(
-                          child: Text(
-                            'More:',
-                            style: kLabelTextStyle,
-                          ),
-                        ),
-                      ),
-                      ReusableCard(
-                        flex: 3,
-                        functionality: () {
-                          setState(() {
-                            updateUI();
-                          });
-                        },
-                        cardChild: Text(
-                          'ReAcquire Data',
+                      textInfo: Text('Option 2', style: kLabelTextStyle),
+                    ),
+                    ReusableCard(
+                      flex: 3,
+                      functionality: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return MatchScreen(matchStuff);
+                        }));
+                      },
+                      cardChild: Center(
+                        child: Text(
+                          'View Recent Matches',
                           style: kNumberTextStyle,
                         ),
-                        textInfo: Text('Option 2', style: kLabelTextStyle),
                       ),
-                      ReusableCard(
-                        flex: 3,
-                        functionality: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) {
-                            return MatchScreen(matchStuff);
-                          }));
-                        },
-                        cardChild: Center(
-                          child: Text(
-                            'View Recent Matches',
-                            style: kNumberTextStyle,
-                          ),
-                        ),
-                        textInfo: Text('Option 3', style: kLabelTextStyle),
-                      ),
-                    ],
-                  ),
-                ),
-                textInfo: Expanded(
-                  flex: 1,
-                  child: Text(
-                    '',
-                    style: kLabelTextStyle,
-                  ),
+                      textInfo: Text('Option 3', style: kLabelTextStyle),
+                    ),
+                  ],
                 ),
               ),
-            ],
-          ),
+              textInfo: Expanded(
+                flex: 1,
+                child: Text(
+                  '',
+                  style: kLabelTextStyle,
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
