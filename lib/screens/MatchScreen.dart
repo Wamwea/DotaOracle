@@ -32,12 +32,14 @@ class _MatchScreenState extends State<MatchScreen> {
         children: <Widget>[
           Expanded(flex: 1, child: Text('${x + 1}: ', style: kLabelTextStyle)),
           Expanded(
-            flex: 15,
+            flex: 20,
             child: DataCard(
-              data1: matchinfo[x]['kills'].toString(),
-              data2: matchinfo[x]['deaths'].toString(),
-              data3: matchinfo[x]['assists'].toString(),
-              data4: winOrLose(),
+              data1: matchinfo != null ? matchinfo[x]['kills'].toString() : '0',
+              data2:
+                  matchinfo != null ? matchinfo[x]['deaths'].toString() : '0',
+              data3:
+                  matchinfo != null ? matchinfo[x]['assists'].toString() : '0',
+              data4: matchinfo != null ? winOrLose() : 'N/A',
             ),
           )
         ],
@@ -51,17 +53,19 @@ class _MatchScreenState extends State<MatchScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.grey,
         title: Text(
           'MATCHDATA',
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(color: Colors.white),
         ),
       ),
       body: SafeArea(
           child: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
-        ),
+            color: Colors.black,
+            image: DecorationImage(
+                image: AssetImage('images/matchScreenImage.jpg'),
+                fit: BoxFit.fill)),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -74,9 +78,6 @@ class _MatchScreenState extends State<MatchScreen> {
                 data3: 'ASSISTS',
                 data4: 'WIN/LOSE',
               ),
-            ),
-            SizedBox(
-              height: 15,
             ),
             Expanded(
               flex: 9,

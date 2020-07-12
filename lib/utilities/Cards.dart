@@ -2,11 +2,17 @@ import 'package:flutter/material.dart';
 import 'constants.dart';
 
 class ReusableCard extends StatelessWidget {
-  ReusableCard({this.cardChild, this.textInfo, this.flex, this.functionality});
+  ReusableCard(
+      {this.cardChild,
+      this.textInfo,
+      this.flex,
+      this.functionality,
+      this.backgroundColor});
   final Widget cardChild;
   final Widget textInfo;
   final int flex;
   final Function functionality;
+  final Color backgroundColor;
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -14,19 +20,24 @@ class ReusableCard extends StatelessWidget {
       child: GestureDetector(
         onTap: functionality,
         child: Container(
-          margin: EdgeInsets.all(15),
+          margin: EdgeInsets.all(8),
           padding: EdgeInsets.all(4),
           decoration: BoxDecoration(
-            color: Colors.white,
-            border: Border.all(color: Colors.black, width: 0.4),
-            borderRadius: BorderRadius.circular(15),
+            color: backgroundColor,
+            border: Border.all(color: Colors.orangeAccent, width: 1),
+            borderRadius: BorderRadius.circular(10),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               textInfo != null ? textInfo : null,
-              cardChild != null ? cardChild : null,
+              cardChild != null
+                  ? cardChild
+                  : SizedBox(
+                      height: 0,
+                      width: 0,
+                    ),
             ],
           ),
         ),
@@ -49,8 +60,7 @@ class IconCard extends StatelessWidget {
       child: Container(
         margin: EdgeInsets.all(15),
         decoration: BoxDecoration(
-          color: kCardColor,
-          border: Border.all(color: kBorderColor, width: 2),
+          color: Colors.white,
           shape: BoxShape.circle,
         ),
         child: cardChild,
@@ -66,7 +76,6 @@ class NumberCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: Container(
-        padding: EdgeInsets.all(10),
         decoration: BoxDecoration(
           shape: BoxShape.circle,
         ),
@@ -74,7 +83,7 @@ class NumberCard extends StatelessWidget {
         child: Center(
           child: Text(
             cardData,
-            style: kNumberTextStyle,
+            style: kNumberTextStyle.copyWith(color: Colors.deepOrangeAccent),
           ),
         ),
       ),
